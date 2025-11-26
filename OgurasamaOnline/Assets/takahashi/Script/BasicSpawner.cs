@@ -34,7 +34,6 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         clientButton.SetActive(false);
     }
 
-
     async void StartGame(GameMode mode)
     {
         Debug.Log("StartGame " + mode.ToString());
@@ -60,8 +59,6 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         });
     }
 
-    
-
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
@@ -85,17 +82,20 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         var data = new NetworkInputData();
 
-        if (Input.GetKey(KeyCode.W))
-            data.direction += Vector3.forward;
+        //if (Input.GetKey(KeyCode.W))
+        //    data.direction += Vector3.forward;
 
-        if (Input.GetKey(KeyCode.S))
-            data.direction += Vector3.back;
+        //if (Input.GetKey(KeyCode.S))
+        //    data.direction += Vector3.back;
 
-        if (Input.GetKey(KeyCode.A))
-            data.direction += Vector3.left;
+        //if (Input.GetKey(KeyCode.A))
+        //    data.direction += Vector3.left;
 
-        if (Input.GetKey(KeyCode.D))
-            data.direction += Vector3.right;
+        //if (Input.GetKey(KeyCode.D))
+        //    data.direction += Vector3.right;
+        //Vector3 playerInput =new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+        data.direction=new Vector3(Input.GetAxis("Horizontal"),0.0f, Input.GetAxis("Vertical"));
+        //data.direction = playerInput;
 
         input.Set(data);
     }
