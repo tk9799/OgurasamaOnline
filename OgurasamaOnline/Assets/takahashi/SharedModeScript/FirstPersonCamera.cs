@@ -8,6 +8,16 @@ public class FirstPersonCamera : MonoBehaviour
     private float verticalRotation;
     private float horizontalRotation;
 
+    /// <summary>
+    /// カーソルを非表示にするとゲーム実行時操作ができなくなるためコメントアウトさせている
+    /// </summary>
+    //private void Start()
+    //{
+    //    Cursor.visible = false;
+
+    //    Cursor.lockState = CursorLockMode.Locked;
+    //}
+
     void LateUpdate()
     {
         if (Target == null)
