@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 6398903966928566870}
   - component: {fileID: 5880081340425406433}
   - component: {fileID: 4601205103430612951}
+  - component: {fileID: 135602096168081622}
+  - component: {fileID: -2059841125533525019}
+  - component: {fileID: -1168002501147264431}
   m_Layer: 0
   m_Name: SharedModePlayer
   m_TagString: Untagged
@@ -109,6 +112,9 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 5880081340425406433}
   - {fileID: 4601205103430612951}
+  - {fileID: 135602096168081622}
+  - {fileID: -2059841125533525019}
+  - {fileID: -1168002501147264431}
   ForceRemoteRenderTimeframe: 0
 --- !u!143 &6398903966928566870
 CharacterController:
@@ -164,4 +170,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528b657fddfdef0469a519e942fffdeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Camera: {fileID: 0}
   PlayerSpeed: 2
+  PlayerDefaultSpeed: 2
+  PlayseDashSpeed: 5
+--- !u!114 &135602096168081622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8756397385390036041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d035de5fc7dee44489351b3fab1fe5fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 0}
+  itemInventory: {fileID: 0}
+--- !u!114 &-2059841125533525019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8756397385390036041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70d7a559ec79bdf489a565a95958e454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _TimeLeft: 0
+  itemList: []
+  reinforcementMove: 10
+  isMoveImprovementItem: 0
+  isDeleteObject: 0
+--- !u!114 &-1168002501147264431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8756397385390036041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f55f23d0cdd8d4096ec045519b7a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _RemainingTimes: []
+  timerSecond: 10
