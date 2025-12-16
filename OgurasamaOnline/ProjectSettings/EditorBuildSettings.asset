@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/OguraTestScene.unity
+    guid: 2750f4e0afe36c7459ecca4a2ec4c9c3
+  - enabled: 1
     path: Assets/Scenes/SharedModeScene.unity
     guid: f2e81505e87c06e47a456c77a3b7cd2f
   - enabled: 0
