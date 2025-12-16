@@ -10,6 +10,7 @@ public class ItemInventory : NetworkBehaviour
 
     private ItemData itemData;
     private PlayerMovement playerMovement;
+    private PlayerTimerManager playerTimerManager;
 
     //移動速度UPする際のSpeed加算する数値
     public float reinforcementMove = 10f;
@@ -32,6 +33,7 @@ public class ItemInventory : NetworkBehaviour
     {
         //itemData = GetComponent<ItemData>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerTimerManager = GetComponent<PlayerTimerManager>();
     }
 
     private void Update()
@@ -55,6 +57,7 @@ public class ItemInventory : NetworkBehaviour
         {
             Debug.Log(itemData.itemID);
             DistinctionItem();
+            //playerTimerManager.StartTimer(0);
             Debug.Log("アイテム使用");
             //itemListCount = itemInventory.itemList.Count;
         }
@@ -78,7 +81,7 @@ public class ItemInventory : NetworkBehaviour
     /// </summary>
     private void DistinctionItem()
     {
-        if (itemData.itemID == 1)
+        if (itemData.itemID == 0)
         {
             MoveImprovementItem();
         }
@@ -93,6 +96,7 @@ public class ItemInventory : NetworkBehaviour
         playerMovement.PlayerSpeed += 50;
         Debug.Log($"PlayerSpeed{playerMovement.PlayerSpeed}");
 
-        GetComponent<PlayerTimerManager>().StartTimer(0);
+        playerTimerManager.StartTimer(itemData.itemID);
+        //GetComponent<PlayerTimerManager>().StartTimer(0);
     }
 }

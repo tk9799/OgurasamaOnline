@@ -11,7 +11,8 @@ public class PlayerTimerManager : NetworkBehaviour
 
     private const int MaxTimers = 5;
 
-    [SerializeField] private float timerSecond = 10f;
+    [Header("タイマーの時間")]
+    [SerializeField] public float timerSecond = 10f;
 
     private void Start()
     {

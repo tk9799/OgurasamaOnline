@@ -20,6 +20,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private void Awake()
     {
+        //CharacterControllerとItemInventoryスクリプトを取得
         _controller = GetComponent<CharacterController>();
         itemInventory = GetComponent<ItemInventory>();
 
