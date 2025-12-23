@@ -12,10 +12,7 @@ public class OguraMiniMap : NetworkBehaviour
 
     private void Start()
     {
-        if (oguraController.isSpawned)
-        {
-            transform.parent = GameObject.Find("Quad").transform;
-        }
+        
     }
 
     private void LateUpdate()
