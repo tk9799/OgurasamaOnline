@@ -13,4 +13,12 @@ public class PrisonDoorOpenArea : NetworkBehaviour
             isInArea = true;
         }
     }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            isInArea = false;
+        }
+    }
 }
