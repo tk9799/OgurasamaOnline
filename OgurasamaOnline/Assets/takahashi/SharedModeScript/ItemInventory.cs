@@ -1,6 +1,7 @@
 using Fusion;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ItemInventory : NetworkBehaviour
 {
@@ -10,6 +11,7 @@ public class ItemInventory : NetworkBehaviour
 
     private ItemData itemData;
     private PlayerMovement playerMovement;
+    private PlayerTimerManager playerTimerManager;
 
     //移動速度UPする際のSpeed加算する数値
     public float reinforcementMove = 10f;
@@ -32,6 +34,7 @@ public class ItemInventory : NetworkBehaviour
     {
         //itemData = GetComponent<ItemData>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerTimerManager = GetComponent<PlayerTimerManager>();
     }
 
     private void Update()
@@ -41,6 +44,7 @@ public class ItemInventory : NetworkBehaviour
             if(itemList.Count > 0)
             {
                 itemData = itemList[0];
+                Debug.Log(itemData.itemID);
             }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -51,10 +55,20 @@ public class ItemInventory : NetworkBehaviour
             }
         }
 
+        //Debug.Log($"Inventory Obj = {gameObject.name}, HasInputAuthority={Object.HasInputAuthority}");
+
+        if (!Object.HasInputAuthority) return;
+
+
         if (Input.GetMouseButtonDown(1))
         {
+            Debug.Log("右クリック入力");
             Debug.Log(itemData.itemID);
-            DistinctionItem();
+            //DistinctionItem();
+            //playerTimerManager.StartTimer((int)TimerType.moveSpeedUp);
+
+            RPC_RequestUseItem(itemData.itemID);
+            //playerTimerManager.StartTimer(0);
             Debug.Log("アイテム使用");
             //itemListCount = itemInventory.itemList.Count;
         }
@@ -76,23 +90,45 @@ public class ItemInventory : NetworkBehaviour
     /// <summary>
     /// 使用するアイテムを判別するメソッド
     /// </summary>
-    private void DistinctionItem()
-    {
-        if (itemData.itemID == 1)
-        {
-            MoveImprovementItem();
-        }
-    }
+    //private void DistinctionItem()
+    //{
+    //    if (itemData.itemID == 0)
+    //    {
+    //        MoveImprovementItem();
+    //    }
+    //}
 
     /// <summary>
     /// 移動速度UPするアイテム
     /// </summary>
     public void MoveImprovementItem()
     {
-        isMoveImprovementItem = true;
-        playerMovement.PlayerSpeed += 50;
         Debug.Log($"PlayerSpeed{playerMovement.PlayerSpeed}");
 
-        GetComponent<PlayerTimerManager>().StartTimer(0);
+        //playerTimerManager.StartTimer(itemData.itemID);
+        //playerTimerManager.StartTimer((int) TimerType.moveSpeedUp);
+
+        var timer = GetComponent<PlayerTimerManager>();
+        timer.StartTimer((int)TimerType.moveSpeedUp);
+        isMoveImprovementItem = true;
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RPC_RequestUseItem(int itemId)
+    {
+        UseItemById(itemId);
+        playerTimerManager.StartTimer((int)TimerType.moveSpeedUp);
+        Debug.Log("アイテム使用");
+    }
+
+    private void UseItemById(int itemId)
+    {
+        switch (itemId)
+        {
+            case 0: // 移動速度UP
+                MoveImprovementItem();
+                playerTimerManager.StartTimer((int)TimerType.moveSpeedUp);
+                break;
+        }
     }
 }
