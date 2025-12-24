@@ -8,12 +8,11 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
     /// <summary>
     /// プレイヤープレハブのインスタンス化
     /// </summary>
-    /// <param name="player"></param>
     public void PlayerJoined(PlayerRef player)
     {
         if (player == Runner.LocalPlayer)
         {
-            Runner.Spawn(PlayerPrefab, new Vector3(0, 1, 0), Quaternion.identity);
+            Runner.Spawn(PlayerPrefab, new Vector3(0, 1, 0), Quaternion.identity,player);
         }
     }
 }

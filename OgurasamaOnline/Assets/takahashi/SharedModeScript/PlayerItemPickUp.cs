@@ -61,6 +61,10 @@ public class PlayerItemPickUp : NetworkBehaviour
                 }
             }
         }
+        //else if (Input.GetMouseButtonDown(1))
+        //{
+        //    Debug.Log("右クリック入力");
+        //}
     }
 
     private void OnDrawGizmos()

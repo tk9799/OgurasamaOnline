@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using Fusion;
 using UnityEngine.UI;
 
@@ -6,34 +6,60 @@ public class TimerGaugeUI : MonoBehaviour
 {
     [SerializeField] private Image gaugeUI;
 
-    //ƒ^ƒCƒ}[‚Ì”Ô†
-    //‚”Ô–Ú‚Ìƒ^ƒCƒ}[‚ğŒ©‚é‚Æ‚«‚Ég‚¤
-    [SerializeField] private int timerIndex = 0;
+    // ã“ã®UIãŒç›£è¦–ã™ã‚‹ã‚¿ã‚¤ãƒãƒ¼ã®ç¨®é¡
+    [SerializeField] private TimerType timerType;
 
-    //ƒ^ƒCƒ}[‚Ìˆ—‚ğ‚µ‚Ä‚¢‚éƒXƒNƒŠƒvƒg
+    //ã‚¿ã‚¤ãƒãƒ¼ã®ç•ªå·
+
+    //ã‚¿ã‚¤ãƒãƒ¼ã®å‡¦ç†ã‚’ã—ã¦ã„ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
     private PlayerTimerManager playerTimerManager;
 
-    private float maxTime = 0.0f;
+    private float maxTime = 10.0f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerTimerManager = GetComponent<PlayerTimerManager>();
+        gaugeUI.fillAmount = 1.0f;
     }
 
-    // Update is called once per frame
+    public void SetPlayer(PlayerTimerManager timerManager)
+    {
+        playerTimerManager = timerManager;
+    }
+
     void Update()
     {
         if(playerTimerManager == null)
         {
-            //Debug.Log("playerTimerManager‚ªnull‚Å‚·");
+            //Debug.Log("playerTimerManagerãŒnullã§ã™");
             return;
         }
 
-        maxTime = playerTimerManager.timerSecond;
+        int index = (int)timerType;
 
-        float remaining = playerTimerManager.RemainingTimes[timerIndex];
+        float maxTime = GetMaxTime(timerType);
+        float remaining = playerTimerManager.RemainingTimes[index];
 
-        gaugeUI.fillAmount = remaining / maxTime;
+        //float maxTime = GetMaxTime();
+
+
+        float rate = Mathf.Clamp01(remaining / maxTime);
+        gaugeUI.fillAmount = rate;
+        //Debug.Log($"[{timerType}] remaining={remaining}");
+        //Debug.Log($"[{timerType}] index={(int)timerType} remaining={remaining}");
+    }
+
+    private float GetMaxTime(TimerType type)
+    {
+        switch (type)
+        {
+            case TimerType.moveSpeedUp:
+                return playerTimerManager.timerTime;
+
+            case TimerType.dash:
+                return playerTimerManager.sutaminaTimerTime;
+
+            default:
+                return 1f;
+        }
     }
 }
