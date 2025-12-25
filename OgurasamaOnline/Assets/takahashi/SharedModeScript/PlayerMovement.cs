@@ -7,8 +7,6 @@ public class PlayerMovement : NetworkBehaviour
 
     private ItemInventory itemInventory;
 
-    //private TimerGaugeUI timerGaugeUI;
-
     private PlayerTimerManager playerTimerManager;
 
     //カメラのターゲットを設定するためにCamera変数を追加
@@ -26,6 +24,7 @@ public class PlayerMovement : NetworkBehaviour
 
     //プレイヤーが加速アイテムを使用したときに加算する速度
     private float playerAccelerationSpeed = 5f;
+    private float playerAccelerationSpeedDash = 15f;
 
     // Shiftを押しているか（入力状態）
     public bool IsPressingDash { get; private set; }
@@ -57,7 +56,7 @@ public class PlayerMovement : NetworkBehaviour
 
             var timerManager = GetComponent<PlayerTimerManager>();
 
-            // ★ すべての TimerGaugeUI に Player をセット
+            // すべての TimerGaugeUI に Player をセット
             foreach (var ui in FindObjectsByType<TimerGaugeUI>(FindObjectsSortMode.None))
             {
                 ui.SetPlayer(timerManager);
@@ -86,7 +85,7 @@ public class PlayerMovement : NetworkBehaviour
 
         bool shift= Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        IsPressingDash = shift && isDash;
+        IsDashing = shift && isDash;
 
         // スタミナがあるかどうか
         bool canDash = playerTimerManager.CanDash();
@@ -95,11 +94,14 @@ public class PlayerMovement : NetworkBehaviour
         {
             if (itemInventory != null && itemInventory.isMoveImprovementItem)
             {
-                PlayerSpeed = (playerAccelerationSpeed + PlayseDashSpeed);
+                PlayerSpeed = playerAccelerationSpeedDash;
                 Debug.Log("加速アイテム使用中ダッシュ");
+                Debug.Log(PlayerSpeed);
             }
-
-            PlayerSpeed = PlayseDashSpeed;
+            else
+            {
+                PlayerSpeed = PlayseDashSpeed;
+            }
         }
         else if(itemInventory != null && itemInventory.isMoveImprovementItem)
         {
