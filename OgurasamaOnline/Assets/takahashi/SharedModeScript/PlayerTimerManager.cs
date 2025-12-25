@@ -24,9 +24,10 @@ public class PlayerTimerManager : NetworkBehaviour
 
     [Header("ダッシュできる時間")]
     [SerializeField] public float sutaminaTimerTime = 10f;
+    [SerializeField] public float sutaminaRecoveryTime = 20f;
 
     [Header("スタミナ消費速度（1秒あたり）")]
-    [SerializeField] private float dashConsumeSpeed = 1f;
+    [SerializeField] private float dashConsumeSpeed = 2f;
 
     [Header("スタミナ回復速度（消費の2倍）")]
     [SerializeField] private float dashRecoverSpeed = 0.5f;
@@ -45,23 +46,6 @@ public class PlayerTimerManager : NetworkBehaviour
     /// </summary>
     public override void FixedUpdateNetwork()
     {
-        //全てのタイマーをチェック
-        //for (int i = 0; i < MaxTimers; i++)
-        //{
-        //    if(RemainingTimes[i] > 0)
-        //    {
-        //        //経過時間を引く
-        //        RemainingTimes.Set(i, RemainingTimes[i] - Runner.DeltaTime);
-        //        Debug.Log(RemainingTimes);
-
-        //        //タイマーの時間が０になったら
-        //        if (RemainingTimes[i] <= 0)
-        //        {
-        //            OnTimerEnd(i);
-        //        }
-        //    }
-        //}
-
         // 効果時間タイマーだけ処理
         for (int i = 0; i < MaxTimers; i++)
         {
@@ -80,25 +64,9 @@ public class PlayerTimerManager : NetworkBehaviour
                 }
             }
         }
-        Debug.Log($"ItemTimer = {RemainingTimes[(int)TimerType.moveSpeedUp]}");
+        //Debug.Log($"ItemTimer = {RemainingTimes[(int)TimerType.moveSpeedUp]}");
         // スタミナ専用処理
         HandleDashStamina();
-    }
-
-    void UpdateMoveSpeedUpTimer()
-    {
-        int index = (int)TimerType.moveSpeedUp;
-
-        if (RemainingTimes[index] <= 0) return;
-
-        RemainingTimes.Set(index, RemainingTimes[index] - Runner.DeltaTime);
-
-        if (RemainingTimes[index] <= 0)
-        {
-            RemainingTimes.Set(index, 0);
-            itemInventory.isMoveImprovementItem = false;
-            itemInventory.isDeleteObject = true;
-        }
     }
 
     private void HandleDashStamina()
@@ -109,9 +77,9 @@ public class PlayerTimerManager : NetworkBehaviour
         if (playerMovement.shiftInput/* && playerMovement.isDash*/)
         {
             //playerMovement.isDash = true;の時のみスタミナ消費
-            if (playerMovement.isDash)
+            if (playerMovement.IsDashing)
             {
-                RemainingTimes.Set(dashIndex, RemainingTimes[dashIndex] - Runner.DeltaTime * dashConsumeSpeed);
+                RemainingTimes.Set(dashIndex,RemainingTimes[dashIndex] - Runner.DeltaTime * dashConsumeSpeed);
                 //Debug.Log(RemainingTimes[dashIndex]);
 
                 if (RemainingTimes[dashIndex] <= 0)
@@ -126,13 +94,7 @@ public class PlayerTimerManager : NetworkBehaviour
         // Shiftを離している → 回復
         else
         {
-            RemainingTimes.Set(
-                dashIndex,
-                Mathf.Min(
-                    sutaminaTimerTime,
-                    RemainingTimes[dashIndex] + Runner.DeltaTime * dashRecoverSpeed
-                )
-            );
+            RemainingTimes.Set(dashIndex,Mathf.Min(sutaminaRecoveryTime, RemainingTimes[dashIndex] + Runner.DeltaTime * dashRecoverSpeed));
             //Debug.Log(RemainingTimes);
 
             // 一定以上回復したらダッシュ可能に戻す
