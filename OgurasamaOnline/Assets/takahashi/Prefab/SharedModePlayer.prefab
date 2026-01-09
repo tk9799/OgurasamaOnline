@@ -49,8 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dde8752aa7e17245a9d0d53da228196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gaugeUI: {fileID: 233722611353140220}
-  timerType: 4
+  imageList:
+  - gaugeUI: {fileID: 233722611353140220}
+    timerType: 4
 --- !u!1 &549148810391780770
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,8 +178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dde8752aa7e17245a9d0d53da228196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gaugeUI: {fileID: 8909673987901756894}
-  timerType: 0
+  imageList:
+  - gaugeUI: {fileID: 8909673987901756894}
+    timerType: 0
+  - gaugeUI: {fileID: 5602006695896906708}
+    timerType: 1
 --- !u!1 &3689353063459134431
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -401,7 +405,7 @@ MonoBehaviour:
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 3
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8536863338768983968
@@ -715,6 +719,7 @@ MonoBehaviour:
   itemList: []
   reinforcementMove: 10
   isMoveImprovementItem: 0
+  isSutaminaStrengthening: 0
   isDeleteObject: 0
 --- !u!114 &-1168002501147264431
 MonoBehaviour:
@@ -731,5 +736,6 @@ MonoBehaviour:
   _RemainingTimes: []
   timerTime: 10
   sutaminaTimerTime: 10
+  sutaminaRecoveryTime: 20
   dashConsumeSpeed: 1
-  dashRecoverSpeed: 2
+  dashRecoverSpeed: 0.5
