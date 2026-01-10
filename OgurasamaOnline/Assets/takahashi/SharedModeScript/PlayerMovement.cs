@@ -85,18 +85,18 @@ public class PlayerMovement : NetworkBehaviour
 
         bool shift= Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
+        // スタミナがあるかどうか
+        //bool canDash = playerTimerManager.CanDash();
+
         IsDashing = shift && isDash;
 
-        // スタミナがあるかどうか
-        bool canDash = playerTimerManager.CanDash();
-
-        if (shiftInput && canDash)
+        if (shiftInput && IsDashing)
         {
             if (itemInventory != null && itemInventory.isMoveImprovementItem)
             {
                 PlayerSpeed = playerAccelerationSpeedDash;
-                Debug.Log("加速アイテム使用中ダッシュ");
-                Debug.Log(PlayerSpeed);
+                //Debug.Log("加速アイテム使用中ダッシュ");
+                //Debug.Log(PlayerSpeed);
             }
             else
             {
@@ -106,7 +106,7 @@ public class PlayerMovement : NetworkBehaviour
         else if(itemInventory != null && itemInventory.isMoveImprovementItem)
         {
             PlayerSpeed = playerAccelerationSpeed;
-            Debug.Log("加速アイテム使用中通常移動");
+            //Debug.Log("加速アイテム使用中通常移動");
         }
         else
         {
