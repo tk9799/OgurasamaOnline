@@ -11,6 +11,8 @@ public class OguraController : NetworkBehaviour
 
     public OguraMiniMap oguraMiniMap = null;
 
+    
+
     public Camera camera = null;
 
     [SerializeField] public bool isSpawned = false;
@@ -83,34 +85,34 @@ public class OguraController : NetworkBehaviour
 
 
 
-        //if (isPlayerDash)
-        //{
-        //    if (0 < currentStamina)
-        //    {
-        //        playerSpeed = playerDashSpeed;
-        //        currentStamina -= Runner.DeltaTime;
-        //    }
+        if (isPlayerDash)
+        {
+            if (0 < currentStamina)
+            {
+                playerSpeed = playerDashSpeed;
+                currentStamina -= Runner.DeltaTime;
+            }
 
-        //    if (currentStamina < maxStamina / 2)
-        //    {
-        //        // スタミナバーの色を赤に変更
-        //    }
-        //    else if (currentStamina <= 0)
-        //    {
-        //        isPlayerDash = false;
-        //        playerSpeed = initialPlayerSpeed;
-        //    }
-        //}
-        //else
-        //{
-        //    playerSpeed = initialPlayerSpeed;
-        //    currentStamina += Runner.DeltaTime;
-        //}
+            if (currentStamina < maxStamina / 2)
+            {
+                // スタミナバーの色を赤に変更
+            }
+            else if (currentStamina <= 0)
+            {
+                isPlayerDash = false;
+                playerSpeed = initialPlayerSpeed;
+            }
+        }
+        else
+        {
+            playerSpeed = initialPlayerSpeed;
+            currentStamina += Runner.DeltaTime;
+        }
 
-        //if (maxStamina <= currentStamina)
-        //{
-        //    currentStamina = maxStamina;
-        //}
+        if (maxStamina <= currentStamina)
+        {
+            currentStamina = maxStamina;
+        }
     }
 
     public override void Spawned()

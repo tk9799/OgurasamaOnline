@@ -10,6 +10,8 @@ public class SlideOpenDoorScript : NetworkBehaviour
     [Header("ドアのRigidbody")]
     [SerializeField] private Rigidbody doorRigidbody = null;
 
+    [Header("NextAreaKeyスクリプトの取得")]
+    [SerializeField] private NextAreaKey nextAreaKey = null;
 
     [Header("プレイヤーのTransform")]
     [SerializeField] private Transform playerTransform = null;
@@ -36,7 +38,6 @@ public class SlideOpenDoorScript : NetworkBehaviour
     [SerializeField] private bool isDoorOpen = false;
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
 
@@ -45,6 +46,8 @@ public class SlideOpenDoorScript : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         if (Input.GetKeyDown(inputKey) && !isDoorOpen)
         {
             transform.DOLocalMove(new Vector3(moveDoorX, 0.0f, moveDoorZ), doorOpenSpeed);
