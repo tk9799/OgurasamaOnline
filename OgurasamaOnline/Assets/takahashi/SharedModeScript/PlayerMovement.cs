@@ -70,6 +70,9 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Shiftキーの入力の更新
+    /// </summary>
     public void Update()
     {
         // Shiftキーの入力状態を更新して入力があるとtrueにする
