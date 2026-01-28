@@ -32,8 +32,8 @@ Transform:
   m_GameObject: {fileID: 9066552223211068933}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.086314, y: 0.8574123, z: 0.35674122}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -174.639, y: 10, z: 99}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -146,7 +146,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oguraTransform: {fileID: 689395325322470782}
+  oguraMiniMap: {fileID: 0}
   camera: {fileID: 0}
+  isSpawned: 0
   coolTime: 0
   isSpeedUpSkill: 0
   isPlayerDetectionSkill: 0
@@ -176,7 +178,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1
-  m_Radius: 0.5
+  m_Radius: 0.33
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
