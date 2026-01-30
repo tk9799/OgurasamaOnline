@@ -9,10 +9,6 @@ public class OguraController : NetworkBehaviour
 
     [SerializeField] private Transform oguraTransform = null;
 
-    public OguraMiniMap oguraMiniMap = null;
-
-    
-
     public Camera camera = null;
 
     [SerializeField] public bool isSpawned = false;

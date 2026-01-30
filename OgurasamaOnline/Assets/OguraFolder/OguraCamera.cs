@@ -21,7 +21,7 @@ public class OguraCamera : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y");
 
         verticalRotation -= mouseY * MouseSensitivity;
-        verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
+        verticalRotation = Mathf.Clamp(verticalRotation, -50f, 50f);
 
         horizontalRotation += mouseX * MouseSensitivity;
 

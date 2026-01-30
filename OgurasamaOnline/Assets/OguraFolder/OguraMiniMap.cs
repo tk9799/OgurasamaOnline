@@ -22,7 +22,12 @@ public class OguraMiniMap : NetworkBehaviour
             return;
         }
 
+        
 
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+
+        }
 
     }
 }
