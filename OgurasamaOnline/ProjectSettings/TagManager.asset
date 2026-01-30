@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Item
-  - Enemy
+  - Ogura
   layers:
   - Default
   - TransparentFX
