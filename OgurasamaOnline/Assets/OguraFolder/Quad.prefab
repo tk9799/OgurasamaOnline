@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oguraTransform: {fileID: 689395325322470782}
+  miniMapCamera: {fileID: 9095528006290625422}
   camera: {fileID: 0}
   isSpawned: 0
   coolTime: 0
@@ -265,6 +266,7 @@ MonoBehaviour:
   maxStamina: 10
   currentStamina: 100
   isCollisionPlayer: 0
+  isCameraSwitch: 0
   initialPlayerSpeed: 0
   playerSpeed: 5
   playerDashSpeed: 15
@@ -388,3 +390,8 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!20 &9095528006290625422 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2546915805539321452, guid: 54c2b8a802c6d244697725dfb7e5b803, type: 3}
+  m_PrefabInstance: {fileID: 6728862617431840226}
+  m_PrefabAsset: {fileID: 0}

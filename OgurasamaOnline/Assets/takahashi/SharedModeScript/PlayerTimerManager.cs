@@ -61,18 +61,6 @@ public class PlayerTimerManager : NetworkBehaviour
     /// </summary>
     public override void FixedUpdateNetwork()
     {
-        if (!Object.HasStateAuthority)
-        {
-            return;
-        }
-
-        UpdateItemTimers();
-        // スタミナ専用処理
-        HandleDashStamina();
-    }
-
-    private void UpdateItemTimers()
-    {
         // 効果時間タイマーだけ処理
         for (int i = 0; i < MaxTimers; i++)
         {
@@ -93,6 +81,8 @@ public class PlayerTimerManager : NetworkBehaviour
             }
         }
         //Debug.Log($"ItemTimer = {RemainingTimes[(int)TimerType.moveSpeedUp]}");
+        // スタミナ専用処理
+        HandleDashStamina();
     }
 
     /// <summary>
@@ -145,6 +135,12 @@ public class PlayerTimerManager : NetworkBehaviour
                 playerMovement.isDash = true;
             }
         }
+        //Debug.Log($"Stamina={RemainingTimes[dashIndex]}, Exhausted={isExhausted}");
+//        Debug.Log(
+//    $"shift={playerMovement.shiftInput} " +
+//    $"IsDashing={playerMovement.IsDashing} " +
+//    $"stamina={RemainingTimes[(int)TimerType.dash]}"
+//);
     }
 
     public bool CanDash()

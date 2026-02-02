@@ -1,15 +1,19 @@
+using Fusion;
 using UnityEngine;
 
-public class SwitchCamera : MonoBehaviour
+public class SwitchCamera : NetworkBehaviour
 {
-    [Header("全体マップのオブジェクト取得")]
-    [SerializeField] private GameObject fullMapCamera = null;
+    [SerializeField] private OguraController oguraController = null;
 
-    [Header("ミニマップを取得")]
-    [SerializeField] private GameObject miniMapCamera = null;
+
+
+    [Header("全体マップのオブジェクト取得")]
+    [SerializeField] private Camera fullMapCamera = null;
+
+    
 
     [Header("マップ切り替えの判定")]
-    [SerializeField] private bool isFullMap = false;
+    [SerializeField] public bool isFullMap = false;
 
     /// <summary>
     /// 
@@ -21,14 +25,14 @@ public class SwitchCamera : MonoBehaviour
             if (!isFullMap)
             {
                 isFullMap = true;
-                fullMapCamera.SetActive(true);
-                miniMapCamera.SetActive(false);
+                fullMapCamera.enabled = true;
+                oguraController.miniMapCamera.enabled = false;
             }
             else
             {
                 isFullMap = false;
-                fullMapCamera.SetActive(false);
-                miniMapCamera.SetActive(true);
+                fullMapCamera.enabled = false;
+                oguraController.miniMapCamera.enabled = true;
             }
         }
     }

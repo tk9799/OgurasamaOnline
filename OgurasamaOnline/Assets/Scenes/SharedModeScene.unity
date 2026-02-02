@@ -520,7 +520,6 @@ GameObject:
   - component: {fileID: 365287354}
   - component: {fileID: 365287353}
   - component: {fileID: 365287356}
-  - component: {fileID: 365287357}
   m_Layer: 0
   m_Name: PrototypeRunner
   m_TagString: Untagged
@@ -637,22 +636,6 @@ MonoBehaviour:
   OnObjectExitAOI:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &365287357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 365287352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bc3597fe4e42904790937d4dc709c95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hostButton: {fileID: 0}
-  clientButton: {fileID: 0}
-  _playerPrefab:
-    RawGuidValue: d361bc95b29d4404eb3c5265e8d901e1
 --- !u!1 &572825504
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,7 +898,7 @@ GameObject:
   - component: {fileID: 1270744440}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1061,7 +1044,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1270744434}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be52559a70e495645b12c9bc625ce176, type: 3}
   m_Name: 
