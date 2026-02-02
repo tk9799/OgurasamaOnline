@@ -76,7 +76,11 @@ public class JailTeleport : NetworkBehaviour
     /// </summary>
     public void TeleportToJail()
     {
-        
+        if (!Object.HasStateAuthority)
+        {
+            return;
+        }
+
         Debug.Log("メソッド呼び出し");
         //StateAuthorityを持っている場合のみ処理を行う
         //このオブジェクトが状態を変更する権限があるか確認

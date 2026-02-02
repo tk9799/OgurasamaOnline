@@ -25,6 +25,8 @@ public class PlayerItemPickUp : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!Object.HasInputAuthority) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.ScreenPointToRay(new Vector3(Screen.width/2f,Screen.height/2f,0));

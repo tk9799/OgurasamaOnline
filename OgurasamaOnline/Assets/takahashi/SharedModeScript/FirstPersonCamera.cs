@@ -5,8 +5,8 @@ public class FirstPersonCamera : MonoBehaviour
     public Transform Target;
     public float MouseSensitivity = 10f;
 
-    private float verticalRotation;
-    private float horizontalRotation;
+    float yaw;
+    float pitch;
 
     /// <summary>
     /// カーソルを非表示にするとゲーム実行時操作ができなくなるためコメントアウトさせている
@@ -18,23 +18,59 @@ public class FirstPersonCamera : MonoBehaviour
     //    Cursor.lockState = CursorLockMode.Locked;
     //}
 
+    public void SetLookRotation(float y, float p)
+    {
+        yaw = y;
+        pitch = p;
+    }
+
+    public void AddLookInput(Vector2 look)
+    {
+        Debug.Log($"LOOK INPUT: {look}");
+        yaw += look.x * MouseSensitivity;
+        pitch -= look.y * MouseSensitivity;
+        pitch = Mathf.Clamp(pitch, -80f, 80f);
+    }
+
     void LateUpdate()
     {
         if (Target == null)
         {
-            return;
+
+            var localPlayer = FindFirstObjectByType<PlayerMovement>();
+            if (localPlayer != null && localPlayer.Object.HasInputAuthority)
+            {
+                Target = localPlayer.transform;
+            }
+            else return;
+
+        }
+        else
+        {
+            var localPlayer = FindFirstObjectByType<PlayerMovement>();
+            if (localPlayer != null && localPlayer.Object.HasInputAuthority)
+            {
+                Target = localPlayer.transform;
+            }
+            else return;
         }
 
-        transform.position = Target.position;
+        transform.position = Target.position + Vector3.up * 1.0f;
+
+        transform.rotation = Quaternion.Euler(pitch, yaw, 0);
+        //transform.position = Target.position;
+
+        //transform.rotation=Quaternion.Euler(verticalRotation, horizontalRotation, 0);
 
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        verticalRotation -= mouseY * MouseSensitivity;
-        verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
+        yaw += mouseX * MouseSensitivity;
+        pitch -= mouseY * MouseSensitivity;
+        pitch = Mathf.Clamp(pitch, -70f, 70f);
 
-        horizontalRotation += mouseX * MouseSensitivity;
+        //horizontalRotation += mouseX * MouseSensitivity;
 
-        transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+        //transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
     }
 }

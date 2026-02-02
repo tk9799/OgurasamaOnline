@@ -5,6 +5,12 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 {
     public GameObject PlayerPrefab;
 
+    //private void Start()
+    //{
+    //    var runner =GetComponent<NetworkRunner>();
+    //    runner.AddCallbacks(FindObjectOfType<BasicSpawner>());
+    //}
+
     /// <summary>
     /// プレイヤープレハブのインスタンス化
     /// </summary>
