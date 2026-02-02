@@ -38,10 +38,9 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         Debug.Log("StartGame " + mode.ToString());
         // Create the Fusion runner and let it know that we will be providing user input
-        _runner = gameObject.GetComponent<NetworkRunner>();
+        _runner = gameObject.AddComponent<NetworkRunner>();
         _runner.ProvideInput = true;
 
-        _runner.AddCallbacks(this);
         // Create the NetworkSceneInfo from the current scene
         var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
         var sceneInfo = new NetworkSceneInfo();
@@ -81,17 +80,24 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        var data = new PlayerInputData();
+        var data = new NetworkInputData();
 
-        data.move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        //if (Input.GetKey(KeyCode.W))
+        //    data.direction += Vector3.forward;
 
-        data.look = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        //Debug.Log($"Look Input X:{data.look.x} Y:{data.look.y}");
+        //if (Input.GetKey(KeyCode.S))
+        //    data.direction += Vector3.back;
 
-        data.Dash = Input.GetKey(KeyCode.LeftShift);
+        //if (Input.GetKey(KeyCode.A))
+        //    data.direction += Vector3.left;
+
+        //if (Input.GetKey(KeyCode.D))
+        //    data.direction += Vector3.right;
+        //Vector3 playerInput =new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+        data.direction=new Vector3(Input.GetAxis("Horizontal"),0.0f, Input.GetAxis("Vertical"));
+        //data.direction = playerInput;
 
         input.Set(data);
-
     }
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }

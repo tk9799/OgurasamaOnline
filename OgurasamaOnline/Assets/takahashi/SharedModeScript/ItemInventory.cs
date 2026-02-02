@@ -2,6 +2,7 @@ using Fusion;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ItemInventory : NetworkBehaviour
 {
@@ -53,10 +54,6 @@ public class ItemInventory : NetworkBehaviour
 
     private void Update()
     {
-        // “ü—ÍŒ ŒÀ‚ª‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢
-        //Œø‰Ê‚ð“K‰ž‚·‚é‚Ì‚ªStateAuthority
-        if (!Object.HasInputAuthority) return;
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SelectItem(0);
@@ -65,6 +62,10 @@ public class ItemInventory : NetworkBehaviour
         {
             SelectItem(1);
         }
+
+        //Debug.Log($"Inventory Obj = {gameObject.name}, HasInputAuthority={Object.HasInputAuthority}");
+
+        if (!Object.HasInputAuthority) return;
 
 
         if (Input.GetMouseButtonDown(1))

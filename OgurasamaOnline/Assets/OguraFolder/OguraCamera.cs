@@ -1,7 +1,9 @@
+using Fusion;
 using UnityEngine;
 
-public class OguraCamera : MonoBehaviour
+public class OguraCamera : NetworkBehaviour
 {
+    
     public Transform Target;
     public float MouseSensitivity = 10f;
 
@@ -26,5 +28,8 @@ public class OguraCamera : MonoBehaviour
         horizontalRotation += mouseX * MouseSensitivity;
 
         transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+
+        
+
     }
 }
