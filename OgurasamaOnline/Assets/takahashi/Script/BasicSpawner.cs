@@ -88,7 +88,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         data.look = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         //Debug.Log($"Look Input X:{data.look.x} Y:{data.look.y}");
 
-        data.Dash = Input.GetKey(KeyCode.LeftShift);
+        data.Dash = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
         input.Set(data);
 

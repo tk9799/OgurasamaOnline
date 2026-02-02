@@ -3,7 +3,7 @@ using UnityEngine;
 public class FirstPersonCamera : MonoBehaviour
 {
     public Transform Target;
-    public float MouseSensitivity = 10f;
+    public float MouseSensitivity = 20.0f;
 
     float yaw;
     float pitch;
@@ -55,7 +55,7 @@ public class FirstPersonCamera : MonoBehaviour
             else return;
         }
 
-        transform.position = Target.position + Vector3.up * 1.0f;
+        transform.position = Target.position;
 
         transform.rotation = Quaternion.Euler(pitch, yaw, 0);
         //transform.position = Target.position;
