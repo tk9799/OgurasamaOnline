@@ -1,19 +1,13 @@
 using Fusion;
-using System.Net.Http.Headers;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerMovement : NetworkBehaviour
 {
-    private NetworkCharacterController networkCharacterController;
-
     private CharacterController _controller;
 
     private ItemInventory itemInventory;
 
     private PlayerTimerManager playerTimerManager;
-
-    [SerializeField] Transform cameraTransform;
 
     //カメラのターゲットを設定するためにCamera変数を追加
     public Camera Camera;
@@ -37,18 +31,12 @@ public class PlayerMovement : NetworkBehaviour
 
     [Networked] public bool IsDashing { get; set; }
 
-    [Networked] float Yaw { get; set; }
-    //[Networked] float Pitch { get; set; }
-
-
     private void Awake()
     {
         //CharacterControllerとItemInventoryスクリプトを取得
         _controller = GetComponent<CharacterController>();
         itemInventory = GetComponent<ItemInventory>();
         playerTimerManager = GetComponent<PlayerTimerManager>();
-
-        networkCharacterController = GetComponent<NetworkCharacterController>();
 
         PlayerSpeed = PlayerDefaultSpeed;
     }
@@ -58,11 +46,13 @@ public class PlayerMovement : NetworkBehaviour
     /// </summary>
     public override void Spawned()
     {
-        if (Object.HasInputAuthority)
+        if (HasStateAuthority)
         {
             Camera = Camera.main;
             Camera.GetComponent<FirstPersonCamera>().Target = transform;
-            cameraTransform = Camera.transform;
+
+            //var ui = FindFirstObjectByType<TimerGaugeUI>();
+            //ui.SetPlayer(GetComponent<PlayerTimerManager>());
 
             var timerManager = GetComponent<PlayerTimerManager>();
 
@@ -72,14 +62,11 @@ public class PlayerMovement : NetworkBehaviour
                 ui.SetPlayer(timerManager);
             }
 
-        }
-
-        if (Object.HasStateAuthority)
-        {
             isDash = true;
 
             // スタミナを満タンにする
             playerTimerManager.SutaminaTimerStart((int)TimerType.dash);
+
         }
     }
 
@@ -89,63 +76,25 @@ public class PlayerMovement : NetworkBehaviour
     public void Update()
     {
         // Shiftキーの入力状態を更新して入力があるとtrueにする
-        //shiftInput = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        shiftInput = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
     }
 
     public override void FixedUpdateNetwork()
     {
-        if (!GetInput(out PlayerInputData playerInputData))
+        // FixedUpdateNetwork is only executed on the StateAuthority
+
+        Quaternion cameraRotationY = Quaternion.Euler(0, Camera.transform.rotation.eulerAngles.y, 0);
+        
+
+        bool shift= Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+        // スタミナがあるかどうか
+        //bool canDash = playerTimerManager.CanDash();
+
+        IsDashing = shift && isDash;
+
+        if (shiftInput && IsDashing)
         {
-            Debug.Log("入力取れてません");
-            return;
-        }
-
-        // 向きをネットワークで更新
-        //Yaw += playerInputData.look.x * 3f;
-        //Pitch -= playerInputData.look.y * 3f;
-        //Pitch = Mathf.Clamp(Pitch, -80f, 80f);
-
-        //transform.rotation = Quaternion.Euler(0, Yaw, 0);
-
-        if (Object.HasInputAuthority)
-        {
-            Vector3 lookDir = Camera.transform.forward;
-            lookDir.y = 0f;
-            Yaw += playerInputData.look.x * 30f;
-
-            if (lookDir.sqrMagnitude > 0.001f)
-            {
-                transform.forward = lookDir;
-            }
-        }
-
-        if (Object.HasStateAuthority)
-        {
-            //Yaw += playerInputData.look.x * 3f;
-            transform.rotation = Quaternion.Euler(0, Yaw, 0);
-        }
-
-        Vector3 cameraForward = Camera.transform.forward;
-        Vector3 cameraRight = Camera.transform.right;
-
-        cameraForward.y = 0;
-        cameraRight.y = 0;
-
-        Vector3 moveDir = cameraForward.normalized * playerInputData.move.y + cameraRight.normalized * playerInputData.move.x;
-        //Vector3 moveDir = forward * playerInputData.move.y + right * playerInputData.move.x;
-
-
-        IsDashing = playerInputData.Dash && isDash;
-
-        bool shift= UnityEngine.Input.GetKey(KeyCode.LeftShift) || UnityEngine.Input.GetKey(KeyCode.RightShift);
-
-        //// スタミナがあるかどうか
-        ////bool canDash = playerTimerManager.CanDash();
-
-
-        if (IsDashing&& CompareTag("Player"))
-        {
-            
             if (itemInventory != null && itemInventory.isMoveImprovementItem)
             {
                 PlayerSpeed = playerAccelerationSpeedDash;
@@ -155,7 +104,6 @@ public class PlayerMovement : NetworkBehaviour
             else
             {
                 PlayerSpeed = PlayseDashSpeed;
-                Debug.Log(PlayerSpeed);
             }
         }
         else if(itemInventory != null && itemInventory.isMoveImprovementItem)
@@ -176,12 +124,14 @@ public class PlayerMovement : NetworkBehaviour
         //    PlayerSpeed += playerAccelerationSpeed;
         //}
 
-        //Vector3 move = cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) *
-        //    Runner.DeltaTime * PlayerSpeed;
-        //Debug.DrawRay(transform.position, transform.forward * 3, Color.blue);
-        //Debug.DrawRay(Camera.transform.position, Camera.transform.forward * 30, Color.red);
-        //_controller.Move(moveDir * PlayerSpeed * Runner.DeltaTime);
-        networkCharacterController.maxSpeed = PlayerSpeed;
-        networkCharacterController.Move(moveDir.normalized * /*PlayerSpeed **/ Runner.DeltaTime);
+        Vector3 move = cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) *
+            Runner.DeltaTime * PlayerSpeed;
+
+        _controller.Move(move);
+
+        if (move != Vector3.zero)
+        {
+            gameObject.transform.forward = move;
+        }
     }
 }

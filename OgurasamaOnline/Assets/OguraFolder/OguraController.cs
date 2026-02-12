@@ -1,5 +1,6 @@
 using Fusion;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class OguraController : NetworkBehaviour
@@ -7,6 +8,8 @@ public class OguraController : NetworkBehaviour
     // MiniMapCameraを小椋プレハブの子にする
 
     [SerializeField] private Transform oguraTransform = null;
+
+    [SerializeField] public Camera miniMapCamera = null;
 
     public Camera camera = null;
 
@@ -29,6 +32,9 @@ public class OguraController : NetworkBehaviour
 
     [Header("プレイヤーとの当たり判定")]
     [SerializeField] public bool isCollisionPlayer = false;
+
+    [Header("カメラの切り替え")]
+    [SerializeField] public bool isCameraSwitch = false;
 
     [SerializeField] private float initialPlayerSpeed = 0.0f;
 
@@ -60,6 +66,21 @@ public class OguraController : NetworkBehaviour
         {
             isPlayerDash = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (!isCameraSwitch)
+            {
+                isCameraSwitch = true;
+            }
+            else
+            {
+                isCameraSwitch = false;
+            }
+
+        }
+
+
     }
 
     /// <summary>
